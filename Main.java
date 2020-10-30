@@ -5,7 +5,16 @@ import java.awt.event.*;
 public class Main implements Runnable, ActionListener{
 
   // Class Variables  
-  
+  JPanel mainPanel;
+
+  JLabel degressFahrenheit;
+  JLabel degressCelsius;
+
+  JTextField fahrenheit;
+  JTextField celcius;
+
+  JButton celciusToFahrenheit;
+  JButton fahrenheitToCelcius;
 
 
   // Method to assemble our GUI
@@ -18,7 +27,45 @@ public class Main implements Runnable, ActionListener{
     frame.setSize(800,600);
     // shows the window
     frame.setVisible(true);
- 
+    //initialize the mainJPanel
+    mainPanel = new JPanel();
+    //disable any layout helpers
+    mainPanel.setLayout(null);
+    //create the labels
+    degressFahrenheit = new JLabel("Degrees Fahrenheit");
+    degressCelsius = new JLabel("Degrees Celsius");
+    //layout the labels by setting the cordinate and size
+    degressFahrenheit.setBounds(10,10,200,20);
+    degressCelsius.setBounds(10,40,200,20);
+    //add labels to main panel
+    mainPanel.add(degressFahrenheit);
+    mainPanel.add(degressCelsius);
+    //initialize the text fields
+    fahrenheit = new JTextField();
+    celcius = new JTextField();
+    //layout the text fiels by setting cordinates and size
+    fahrenheit.setBounds(160,10,100,20);
+    celcius.setBounds(160,40,100,20);
+    //add text fields to main panel
+    mainPanel.add(fahrenheit);
+    mainPanel.add(celcius);
+    //initialize the buttons
+    fahrenheitToCelcius = new JButton("F --> C");
+    celciusToFahrenheit = new JButton("C --> F");
+    //layout the buttons by setting cordinate and size
+    fahrenheitToCelcius.setBounds(270,10,100,15); 
+    celciusToFahrenheit.setBounds(270,40,100,15);
+    //add an action listener to the buttons
+    fahrenheitToCelcius.addActionListener(this);
+    celciusToFahrenheit.addActionListener(this);
+    //set the action command on the buttons
+    fahrenheitToCelcius.setActionCommand("fahrenheit");
+    celciusToFahrenheit.setActionCommand("celcius");
+    //add buttons to panel
+    mainPanel.add(fahrenheitToCelcius);
+    mainPanel.add(celciusToFahrenheit);
+    //add the panel to the window
+    frame.add(mainPanel);
     
 
   }
@@ -27,6 +74,30 @@ public class Main implements Runnable, ActionListener{
   public void actionPerformed(ActionEvent e){
     // get the command from the action
     String command = e.getActionCommand();
+    
+    if(command.equals("fahrenheit")){
+      //get text from fahrenheit box
+      String firstText = fahrenheit.getText();
+      //change string into integer
+      int fah = Integer.parseInt(firstText);
+      //calculate users result in celcius
+      int cel = (fah - 32) * 5/9;
+      //tell user their result
+      celcius.setText("" + cel);
+
+    }
+    if(command.equals("celcius")){
+      //get text from fahrenheit box
+      String firstText = celcius.getText();
+      //change string into integer
+      int cel = Integer.parseInt(firstText);
+      //calculate users result in celcius
+      int fah = (cel * 9)/5 + 32;
+      //tell user their result
+      fahrenheit.setText("" + fah);
+
+    }
+
 
   }
 
